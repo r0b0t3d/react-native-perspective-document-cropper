@@ -1,4 +1,4 @@
-# react-native-document-scanner
+# react-native-perspective-document-cropper
 
 This is a template for Nitro Modules.
 
