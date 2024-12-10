@@ -1,0 +1,17 @@
+{
+  "cxxNamespace": ["customcrop"],
+  "ios": {
+    "iosModuleName": "ImagePerspectiveCropper"
+  },
+  "android": {
+    "androidNamespace": ["customcrop"],
+    "androidCxxLibName": "ImagePerspectiveCropper"
+  },
+  "autolinking": {
+    "ImagePerspectiveCropper": {
+      "swift": "HybridImagePerspectiveCropper",
+      "kotlin": "HybridImagePerspectiveCropper"
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
