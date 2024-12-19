@@ -4120,13 +4120,13 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-nitro-codegen@^0.18.1:
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/nitro-codegen/-/nitro-codegen-0.18.1.tgz#5f04829fda54028b5832f35abc432e577530b7c1"
-  integrity sha512-gDOHIIFFY89Ibo/Q8Dlzx4Rk9fCaGnby4Er5Dh1xV4J5hMqTfqo2VjG+RxScdUTYy/SKOc0UsB2faQybs5+GDw==
+nitro-codegen@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/nitro-codegen/-/nitro-codegen-0.19.0.tgz#5a54e8c968f619f0729e568cd959838c09f3e067"
+  integrity sha512-/5a39Ou/+ceqEbgqY2zw+0tFP9uEVM/u50zSCyYgFF9Pm//QjFmL9pjUClkbOAtfGO+6+MetH8H7p/7+930N+g==
   dependencies:
     chalk "^5.3.0"
-    react-native-nitro-modules "^0.18.1"
+    react-native-nitro-modules "^0.19.0"
     ts-morph "^24.0.0"
     yargs "^17.7.2"
     zod "^3.23.8"
@@ -4509,15 +4509,10 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
 
-react-native-nitro-modules@*:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.11.0.tgz#0d7306ee61aef0fde2a6242342286d9064e7f00a"
-  integrity sha512-YMRRey7jOTcTbSYBNXx6dqUdkIScy8WatSMs0cuBoaGyP7MjovhELy7zqBvMAr1i5Ib0HPKIs/BuMswy7UvXxg==
-
-react-native-nitro-modules@^0.18.1:
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.18.1.tgz#2d0f695b5a5a6f1be87da158868c3ea984be5989"
-  integrity sha512-F1PA92N8Qv/0I3gKnUFU/eP2C16TSSWwuWuUJnVXX4pCrZztP6BHSvRAZj9WpwxytoKICjwgeVk8K//kvZDZAg==
+react-native-nitro-modules@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.19.0.tgz#30962c72c635a22052f756612825d972493e80c1"
+  integrity sha512-6aUxp+AnmHtZroY1OloFIYBC/+Ucn7zvW/KD7C5Sz4iYlPrx5Ave9GMX1Fjoa7QkZr09os7qutFVh6riaw/qlA==
 
 react-native@^0.76.3:
   version "0.76.3"

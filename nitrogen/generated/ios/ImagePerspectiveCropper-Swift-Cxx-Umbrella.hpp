@@ -19,6 +19,8 @@ namespace margelo::nitro::customcrop { struct Rectangle; }
 #include "HybridImagePerspectiveCropperSpec.hpp"
 #include "Point.hpp"
 #include "Rectangle.hpp"
+#include <NitroModules/Result.hpp>
+#include <exception>
 #include <functional>
 #include <memory>
 #include <string>
@@ -33,8 +35,8 @@ namespace margelo::nitro::customcrop { struct Rectangle; }
 #include <NitroModules/RuntimeError.hpp>
 
 // Forward declarations of Swift defined types
-// Forward declaration of `HybridImagePerspectiveCropperSpecCxx` to properly resolve imports.
-namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpecCxx; }
+// Forward declaration of `HybridImagePerspectiveCropperSpec_cxx` to properly resolve imports.
+namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpec_cxx; }
 
 // Include Swift defined types
 #if __has_include("ImagePerspectiveCropper-Swift.h")

@@ -8,26 +8,8 @@
 import Foundation
 import NitroModules
 
-/**
- * A Swift protocol representing the ImagePerspectiveCropper HybridObject.
- * Implement this protocol to create Swift-based instances of ImagePerspectiveCropper.
- *
- * When implementing this protocol, make sure to initialize `hybridContext` - example:
- * ```
- * public class HybridImagePerspectiveCropper : HybridImagePerspectiveCropperSpec {
- *   // Initialize HybridContext
- *   var hybridContext = margelo.nitro.HybridContext()
- *
- *   // Return size of the instance to inform JS GC about memory pressure
- *   var memorySize: Int {
- *     return getSizeOf(self)
- *   }
- *
- *   // ...
- * }
- * ```
- */
-public protocol HybridImagePerspectiveCropperSpec: AnyObject, HybridObjectSpec {
+/// See ``HybridImagePerspectiveCropperSpec``
+public protocol HybridImagePerspectiveCropperSpec_protocol: AnyObject {
   // Properties
   
 
@@ -35,3 +17,34 @@ public protocol HybridImagePerspectiveCropperSpec: AnyObject, HybridObjectSpec {
   func detectRectangleForImage(image: String, onSuccess: @escaping ((_ rectangle: Rectangle) -> Void), onError: @escaping ((_ message: String) -> Void)) throws -> Void
   func cropImage(image: String, rectangle: Rectangle, onSuccess: @escaping ((_ image: String) -> Void), onError: @escaping ((_ message: String) -> Void)) throws -> Void
 }
+
+/// See ``HybridImagePerspectiveCropperSpec``
+public class HybridImagePerspectiveCropperSpec_base: HybridObjectSpec {
+  private weak var cxxWrapper: HybridImagePerspectiveCropperSpec_cxx? = nil
+  public func getCxxWrapper() -> HybridImagePerspectiveCropperSpec_cxx {
+  #if DEBUG
+    guard self is HybridImagePerspectiveCropperSpec else {
+      fatalError("`self` is not a `HybridImagePerspectiveCropperSpec`! Did you accidentally inherit from `HybridImagePerspectiveCropperSpec_base` instead of `HybridImagePerspectiveCropperSpec`?")
+    }
+  #endif
+    if let cxxWrapper = self.cxxWrapper {
+      return cxxWrapper
+    } else {
+      let cxxWrapper = HybridImagePerspectiveCropperSpec_cxx(self as! HybridImagePerspectiveCropperSpec)
+      self.cxxWrapper = cxxWrapper
+      return cxxWrapper
+    }
+  }
+  public var memorySize: Int { return 0 }
+}
+
+/**
+ * A Swift base-protocol representing the ImagePerspectiveCropper HybridObject.
+ * Implement this protocol to create Swift-based instances of ImagePerspectiveCropper.
+ * ```swift
+ * class HybridImagePerspectiveCropper : HybridImagePerspectiveCropperSpec {
+ *   // ...
+ * }
+ * ```
+ */
+public typealias HybridImagePerspectiveCropperSpec = HybridImagePerspectiveCropperSpec_protocol & HybridImagePerspectiveCropperSpec_base

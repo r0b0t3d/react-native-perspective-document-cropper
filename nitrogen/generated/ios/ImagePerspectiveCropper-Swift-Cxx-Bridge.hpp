@@ -16,13 +16,15 @@ namespace margelo::nitro::customcrop { struct Point; }
 namespace margelo::nitro::customcrop { struct Rectangle; }
 
 // Forward declarations of Swift defined types
-// Forward declaration of `HybridImagePerspectiveCropperSpecCxx` to properly resolve imports.
-namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpecCxx; }
+// Forward declaration of `HybridImagePerspectiveCropperSpec_cxx` to properly resolve imports.
+namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridImagePerspectiveCropperSpec.hpp"
 #include "Point.hpp"
 #include "Rectangle.hpp"
+#include <NitroModules/Result.hpp>
+#include <exception>
 #include <functional>
 #include <memory>
 #include <string>
@@ -96,5 +98,18 @@ namespace margelo::nitro::customcrop::bridge::swift {
   using std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_ = std::shared_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec>;
   std::shared_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec> create_std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_(std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec>
+  using std__weak_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_ = std::weak_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec>;
+  inline std__weak_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_ weakify_std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_(const std::shared_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<void>
+  using Result_void_ = Result<void>;
+  inline Result_void_ create_Result_void_() {
+    return Result<void>::withValue();
+  }
+  inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
+    return Result<void>::withError(error);
+  }
 
 } // namespace margelo::nitro::customcrop::bridge::swift

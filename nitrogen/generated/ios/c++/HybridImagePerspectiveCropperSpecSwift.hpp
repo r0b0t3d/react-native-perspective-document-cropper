@@ -9,8 +9,8 @@
 
 #include "HybridImagePerspectiveCropperSpec.hpp"
 
-// Forward declaration of `HybridImagePerspectiveCropperSpecCxx` to properly resolve imports.
-namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpecCxx; }
+// Forward declaration of `HybridImagePerspectiveCropperSpec_cxx` to properly resolve imports.
+namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpec_cxx; }
 
 // Forward declaration of `Rectangle` to properly resolve imports.
 namespace margelo::nitro::customcrop { struct Rectangle; }
@@ -22,36 +22,30 @@ namespace margelo::nitro::customcrop { struct Point; }
 #include "Rectangle.hpp"
 #include "Point.hpp"
 
-#if __has_include(<NitroModules/HybridContext.hpp>)
-#include <NitroModules/HybridContext.hpp>
-#else
-#error NitroModules cannot be found! Are you sure you installed NitroModules properly?
-#endif
-
 #include "ImagePerspectiveCropper-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::customcrop {
 
   /**
-   * The C++ part of HybridImagePerspectiveCropperSpecCxx.swift.
+   * The C++ part of HybridImagePerspectiveCropperSpec_cxx.swift.
    *
-   * HybridImagePerspectiveCropperSpecSwift (C++) accesses HybridImagePerspectiveCropperSpecCxx (Swift), and might
+   * HybridImagePerspectiveCropperSpecSwift (C++) accesses HybridImagePerspectiveCropperSpec_cxx (Swift), and might
    * contain some additional bridging code for C++ <> Swift interop.
    *
    * Since this obviously introduces an overhead, I hope at some point in
-   * the future, HybridImagePerspectiveCropperSpecCxx can directly inherit from the C++ class HybridImagePerspectiveCropperSpec
+   * the future, HybridImagePerspectiveCropperSpec_cxx can directly inherit from the C++ class HybridImagePerspectiveCropperSpec
    * to simplify the whole structure and memory management.
    */
   class HybridImagePerspectiveCropperSpecSwift: public virtual HybridImagePerspectiveCropperSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridImagePerspectiveCropperSpecSwift(const ImagePerspectiveCropper::HybridImagePerspectiveCropperSpecCxx& swiftPart):
+    explicit HybridImagePerspectiveCropperSpecSwift(const ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx& swiftPart):
       HybridObject(HybridImagePerspectiveCropperSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline ImagePerspectiveCropper::HybridImagePerspectiveCropperSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -66,14 +60,20 @@ namespace margelo::nitro::customcrop {
   public:
     // Methods
     inline void detectRectangleForImage(const std::string& image, const std::function<void(const Rectangle& /* rectangle */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) override {
-      _swiftPart.detectRectangleForImage(image, onSuccess, onError);
+      auto __result = _swiftPart.detectRectangleForImage(image, onSuccess, onError);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void cropImage(const std::string& image, const Rectangle& rectangle, const std::function<void(const std::string& /* image */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) override {
-      _swiftPart.cropImage(image, rectangle, onSuccess, onError);
+      auto __result = _swiftPart.cropImage(image, rectangle, onSuccess, onError);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
 
   private:
-    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpecCxx _swiftPart;
+    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::customcrop

@@ -10,14 +10,13 @@
 // Include C++ implementation defined types
 #include "HybridImagePerspectiveCropperSpecSwift.hpp"
 #include "ImagePerspectiveCropper-Swift-Cxx-Umbrella.hpp"
-#include <NitroModules/HybridContext.hpp>
 
 namespace margelo::nitro::customcrop::bridge::swift {
 
   // pragma MARK: std::shared_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec>
   std::shared_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec> create_std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_(void* _Nonnull swiftUnsafePointer) {
-    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpecCxx swiftPart = ImagePerspectiveCropper::HybridImagePerspectiveCropperSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);
-    return HybridContext::getOrCreate<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpecSwift>(swiftPart);
+    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx swiftPart = ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpecSwift>(swiftPart);
   }
   void* _Nonnull get_std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_(std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_ cppType) {
     std::shared_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpecSwift>(cppType);
@@ -26,8 +25,8 @@ namespace margelo::nitro::customcrop::bridge::swift {
       throw std::runtime_error("Class \"HybridImagePerspectiveCropperSpec\" is not implemented in Swift!");
     }
   #endif
-    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpecCxx swiftPart = swiftWrapper->getSwiftPart();
-    return ImagePerspectiveCropper::HybridImagePerspectiveCropperSpecCxxUnsafe::toUnsafe(swiftPart);
+    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
   }
 
 } // namespace margelo::nitro::customcrop::bridge::swift

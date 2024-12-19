@@ -29,7 +29,7 @@ namespace margelo::nitro::customcrop {
 
   public:
     void call(jni::alias_ref<jni::JString> image) {
-      return _func(image->toStdString());
+      _func(image->toStdString());
     }
 
   public:

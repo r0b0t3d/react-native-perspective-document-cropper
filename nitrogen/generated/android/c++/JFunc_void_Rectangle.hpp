@@ -32,7 +32,7 @@ namespace margelo::nitro::customcrop {
 
   public:
     void call(jni::alias_ref<JRectangle> rectangle) {
-      return _func(rectangle->toCpp());
+      _func(rectangle->toCpp());
     }
 
   public:
