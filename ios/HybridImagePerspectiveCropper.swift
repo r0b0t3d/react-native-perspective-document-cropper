@@ -5,8 +5,6 @@ import CoreImage
 class HybridImagePerspectiveCropper: HybridImagePerspectiveCropperSpec {
   var hybridContext = margelo.nitro.HybridContext()
   
-  var memorySize: Int = 0
-  
   private let rectangleDetectionQueue = DispatchQueue(label: "RectangleDetectionQueue")
   
   func detectRectangleForImage(image: String, onSuccess: @escaping ((Rectangle) -> Void), onError: @escaping ((String) -> Void)) throws {
