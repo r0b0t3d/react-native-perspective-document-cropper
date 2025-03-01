@@ -7,7 +7,6 @@
 
 package com.margelo.nitro.customcrop
 
-import android.util.Log
 import androidx.annotation.Keep
 import com.facebook.jni.HybridData
 import com.facebook.proguard.annotations.DoNotStrip
@@ -29,16 +28,12 @@ abstract class HybridImagePerspectiveCropperSpec: HybridObject() {
   private var mHybridData: HybridData = initHybrid()
 
   init {
-    // Pass this `HybridData` through to it's base class,
-    // to represent inheritance to JHybridObject on C++ side
     super.updateNative(mHybridData)
   }
 
-  /**
-   * Call from a child class to initialize HybridData with a child.
-   */
   override fun updateNative(hybridData: HybridData) {
     mHybridData = hybridData
+    super.updateNative(hybridData)
   }
 
   // Properties
@@ -67,16 +62,5 @@ abstract class HybridImagePerspectiveCropperSpec: HybridObject() {
 
   companion object {
     private const val TAG = "HybridImagePerspectiveCropperSpec"
-    init {
-      try {
-        Log.i(TAG, "Loading ImagePerspectiveCropper C++ library...")
-        System.loadLibrary("ImagePerspectiveCropper")
-        Log.i(TAG, "Successfully loaded ImagePerspectiveCropper C++ library!")
-      } catch (e: Error) {
-        Log.e(TAG, "Failed to load ImagePerspectiveCropper C++ library! Is it properly installed and linked? " +
-                    "Is the name correct? (see `CMakeLists.txt`, at `add_library(...)`)", e)
-        throw e
-      }
-    }
   }
 }

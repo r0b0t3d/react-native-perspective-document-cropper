@@ -33,7 +33,7 @@ namespace margelo::nitro::customcrop {
      * Invokes the function this `JFunc_void_Rectangle` instance holds through JNI.
      */
     void invoke(const Rectangle& rectangle) const {
-      static const auto method = getClass()->getMethod<void(jni::alias_ref<JRectangle> /* rectangle */)>("invoke");
+      static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JRectangle> /* rectangle */)>("invoke");
       method(self(), JRectangle::fromCpp(rectangle));
     }
   };
@@ -64,7 +64,7 @@ namespace margelo::nitro::customcrop {
   public:
     static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/customcrop/Func_void_Rectangle_cxx;";
     static void registerNatives() {
-      registerHybrid({makeNativeMethod("invoke", JFunc_void_Rectangle_cxx::invoke_cxx)});
+      registerHybrid({makeNativeMethod("invoke_cxx", JFunc_void_Rectangle_cxx::invoke_cxx)});
     }
 
   private:

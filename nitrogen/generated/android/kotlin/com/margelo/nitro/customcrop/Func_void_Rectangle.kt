@@ -40,7 +40,7 @@ fun interface Func_void_Rectangle: (Rectangle) -> Unit {
 @Keep
 @Suppress(
   "KotlinJniMissingFunction", "unused",
-  "RedundantSuppression", "RedundantUnitReturnType",
+  "RedundantSuppression", "RedundantUnitReturnType", "FunctionName",
   "ConvertSecondaryConstructorToPrimary", "ClassName", "LocalVariableName",
 )
 class Func_void_Rectangle_cxx: Func_void_Rectangle {
@@ -54,8 +54,13 @@ class Func_void_Rectangle_cxx: Func_void_Rectangle {
     mHybridData = hybridData
   }
 
+  @DoNotStrip
+  @Keep
+  override fun invoke(rectangle: Rectangle): Unit
+    = invoke_cxx(rectangle)
+
   @FastNative
-  external override fun invoke(rectangle: Rectangle): Unit
+  private external fun invoke_cxx(rectangle: Rectangle): Unit
 }
 
 /**

@@ -33,8 +33,6 @@ int initialize(JavaVM* vm) {
     margelo::nitro::customcrop::JHybridImagePerspectiveCropperSpec::registerNatives();
     margelo::nitro::customcrop::JFunc_void_Rectangle_cxx::registerNatives();
     margelo::nitro::customcrop::JFunc_void_std__string_cxx::registerNatives();
-    margelo::nitro::customcrop::JFunc_void_std__string_cxx::registerNatives();
-    margelo::nitro::customcrop::JFunc_void_std__string_cxx::registerNatives();
 
     // Register Nitro Hybrid Objects
     HybridObjectRegistry::registerHybridObjectConstructor(

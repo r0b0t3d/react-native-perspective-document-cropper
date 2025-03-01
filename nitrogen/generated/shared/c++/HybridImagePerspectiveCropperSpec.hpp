@@ -43,7 +43,7 @@ namespace margelo::nitro::customcrop {
       explicit HybridImagePerspectiveCropperSpec(): HybridObject(TAG) { }
 
       // Destructor
-      virtual ~HybridImagePerspectiveCropperSpec() { }
+      ~HybridImagePerspectiveCropperSpec() override = default;
 
     public:
       // Properties

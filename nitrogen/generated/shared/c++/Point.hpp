@@ -33,6 +33,7 @@ namespace margelo::nitro::customcrop {
     double y     SWIFT_PRIVATE;
 
   public:
+    Point() = default;
     explicit Point(double x, double y): x(x), y(y) {}
   };
 
@@ -44,7 +45,7 @@ namespace margelo::nitro {
 
   // C++ Point <> JS Point (object)
   template <>
-  struct JSIConverter<Point> {
+  struct JSIConverter<Point> final {
     static inline Point fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
       return Point(

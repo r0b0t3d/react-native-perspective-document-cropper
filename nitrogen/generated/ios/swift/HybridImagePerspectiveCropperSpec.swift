@@ -9,7 +9,7 @@ import Foundation
 import NitroModules
 
 /// See ``HybridImagePerspectiveCropperSpec``
-public protocol HybridImagePerspectiveCropperSpec_protocol: AnyObject {
+public protocol HybridImagePerspectiveCropperSpec_protocol: HybridObject {
   // Properties
   
 
@@ -19,7 +19,7 @@ public protocol HybridImagePerspectiveCropperSpec_protocol: AnyObject {
 }
 
 /// See ``HybridImagePerspectiveCropperSpec``
-public class HybridImagePerspectiveCropperSpec_base: HybridObjectSpec {
+public class HybridImagePerspectiveCropperSpec_base {
   private weak var cxxWrapper: HybridImagePerspectiveCropperSpec_cxx? = nil
   public func getCxxWrapper() -> HybridImagePerspectiveCropperSpec_cxx {
   #if DEBUG
@@ -35,7 +35,6 @@ public class HybridImagePerspectiveCropperSpec_base: HybridObjectSpec {
       return cxxWrapper
     }
   }
-  public var memorySize: Int { return 0 }
 }
 
 /**

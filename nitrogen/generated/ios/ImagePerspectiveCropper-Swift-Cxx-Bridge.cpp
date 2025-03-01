@@ -41,7 +41,7 @@ namespace margelo::nitro::customcrop::bridge::swift {
       throw std::runtime_error("Class \"HybridImagePerspectiveCropperSpec\" is not implemented in Swift!");
     }
   #endif
-    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx swiftPart = swiftWrapper->getSwiftPart();
+    ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
     return swiftPart.toUnsafe();
   }
 

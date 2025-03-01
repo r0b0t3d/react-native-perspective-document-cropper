@@ -34,7 +34,7 @@ namespace margelo::nitro::customcrop {
   }
 
   size_t JHybridImagePerspectiveCropperSpec::getExternalMemorySize() noexcept {
-    static const auto method = _javaPart->getClass()->getMethod<jlong()>("getMemorySize");
+    static const auto method = javaClassStatic()->getMethod<jlong()>("getMemorySize");
     return method(_javaPart);
   }
 
@@ -43,11 +43,11 @@ namespace margelo::nitro::customcrop {
 
   // Methods
   void JHybridImagePerspectiveCropperSpec::detectRectangleForImage(const std::string& image, const std::function<void(const Rectangle& /* rectangle */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) {
-    static const auto method = _javaPart->getClass()->getMethod<void(jni::alias_ref<jni::JString> /* image */, jni::alias_ref<JFunc_void_Rectangle::javaobject> /* onSuccess */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onError */)>("detectRectangleForImage_cxx");
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* image */, jni::alias_ref<JFunc_void_Rectangle::javaobject> /* onSuccess */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onError */)>("detectRectangleForImage_cxx");
     method(_javaPart, jni::make_jstring(image), JFunc_void_Rectangle_cxx::fromCpp(onSuccess), JFunc_void_std__string_cxx::fromCpp(onError));
   }
   void JHybridImagePerspectiveCropperSpec::cropImage(const std::string& image, const Rectangle& rectangle, const std::function<void(const std::string& /* image */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) {
-    static const auto method = _javaPart->getClass()->getMethod<void(jni::alias_ref<jni::JString> /* image */, jni::alias_ref<JRectangle> /* rectangle */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onSuccess */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onError */)>("cropImage_cxx");
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* image */, jni::alias_ref<JRectangle> /* rectangle */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onSuccess */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onError */)>("cropImage_cxx");
     method(_javaPart, jni::make_jstring(image), JRectangle::fromCpp(rectangle), JFunc_void_std__string_cxx::fromCpp(onSuccess), JFunc_void_std__string_cxx::fromCpp(onError));
   }
 

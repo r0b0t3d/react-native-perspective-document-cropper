@@ -45,7 +45,9 @@ namespace margelo::nitro::customcrop {
 
   public:
     // Get the Swift part
-    inline ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx getSwiftPart() noexcept { return _swiftPart; }
+    inline ImagePerspectiveCropper::HybridImagePerspectiveCropperSpec_cxx& getSwiftPart() noexcept {
+      return _swiftPart;
+    }
 
   public:
     // Get memory pressure

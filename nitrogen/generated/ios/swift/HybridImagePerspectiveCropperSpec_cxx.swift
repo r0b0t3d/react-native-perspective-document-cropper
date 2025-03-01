@@ -101,7 +101,7 @@ public class HybridImagePerspectiveCropperSpec_cxx {
 
   // Methods
   @inline(__always)
-  public func detectRectangleForImage(image: std.string, onSuccess: bridge.Func_void_Rectangle, onError: bridge.Func_void_std__string) -> bridge.Result_void_ {
+  public final func detectRectangleForImage(image: std.string, onSuccess: bridge.Func_void_Rectangle, onError: bridge.Func_void_std__string) -> bridge.Result_void_ {
     do {
       try self.__implementation.detectRectangleForImage(image: String(image), onSuccess: { () -> (Rectangle) -> Void in
         let __wrappedFunction = bridge.wrap_Func_void_Rectangle(onSuccess)
@@ -122,7 +122,7 @@ public class HybridImagePerspectiveCropperSpec_cxx {
   }
   
   @inline(__always)
-  public func cropImage(image: std.string, rectangle: Rectangle, onSuccess: bridge.Func_void_std__string, onError: bridge.Func_void_std__string) -> bridge.Result_void_ {
+  public final func cropImage(image: std.string, rectangle: Rectangle, onSuccess: bridge.Func_void_std__string, onError: bridge.Func_void_std__string) -> bridge.Result_void_ {
     do {
       try self.__implementation.cropImage(image: String(image), rectangle: rectangle, onSuccess: { () -> (String) -> Void in
         let __wrappedFunction = bridge.wrap_Func_void_std__string(onSuccess)

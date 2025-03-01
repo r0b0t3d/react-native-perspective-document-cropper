@@ -38,6 +38,7 @@ namespace margelo::nitro::customcrop {
     double height     SWIFT_PRIVATE;
 
   public:
+    Rectangle() = default;
     explicit Rectangle(Point topLeft, Point topRight, Point bottomLeft, Point bottomRight, double width, double height): topLeft(topLeft), topRight(topRight), bottomLeft(bottomLeft), bottomRight(bottomRight), width(width), height(height) {}
   };
 
@@ -49,7 +50,7 @@ namespace margelo::nitro {
 
   // C++ Rectangle <> JS Rectangle (object)
   template <>
-  struct JSIConverter<Rectangle> {
+  struct JSIConverter<Rectangle> final {
     static inline Rectangle fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
       return Rectangle(

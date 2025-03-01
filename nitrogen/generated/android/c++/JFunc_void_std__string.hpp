@@ -30,7 +30,7 @@ namespace margelo::nitro::customcrop {
      * Invokes the function this `JFunc_void_std__string` instance holds through JNI.
      */
     void invoke(const std::string& image) const {
-      static const auto method = getClass()->getMethod<void(jni::alias_ref<jni::JString> /* image */)>("invoke");
+      static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* image */)>("invoke");
       method(self(), jni::make_jstring(image));
     }
   };
@@ -61,7 +61,7 @@ namespace margelo::nitro::customcrop {
   public:
     static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/customcrop/Func_void_std__string_cxx;";
     static void registerNatives() {
-      registerHybrid({makeNativeMethod("invoke", JFunc_void_std__string_cxx::invoke_cxx)});
+      registerHybrid({makeNativeMethod("invoke_cxx", JFunc_void_std__string_cxx::invoke_cxx)});
     }
 
   private:
