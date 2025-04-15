@@ -16,8 +16,6 @@
 #include <NitroModules/HybridObjectRegistry.hpp>
 
 #include "JHybridImagePerspectiveCropperSpec.hpp"
-#include "JFunc_void_Rectangle.hpp"
-#include "JFunc_void_std__string.hpp"
 #include <NitroModules/JNISharedPtr.hpp>
 #include <NitroModules/DefaultConstructableObject.hpp>
 
@@ -31,8 +29,6 @@ int initialize(JavaVM* vm) {
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
     margelo::nitro::customcrop::JHybridImagePerspectiveCropperSpec::registerNatives();
-    margelo::nitro::customcrop::JFunc_void_Rectangle_cxx::registerNatives();
-    margelo::nitro::customcrop::JFunc_void_std__string_cxx::registerNatives();
 
     // Register Nitro Hybrid Objects
     HybridObjectRegistry::registerHybridObjectConstructor(

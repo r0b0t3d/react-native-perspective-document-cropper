@@ -17,10 +17,10 @@ namespace margelo::nitro::customcrop { struct Rectangle; }
 // Forward declaration of `Point` to properly resolve imports.
 namespace margelo::nitro::customcrop { struct Point; }
 
-#include <string>
-#include <functional>
+#include <NitroModules/Promise.hpp>
 #include "Rectangle.hpp"
 #include "Point.hpp"
+#include <string>
 
 #include "ImagePerspectiveCropper-Swift-Cxx-Umbrella.hpp"
 
@@ -61,17 +61,21 @@ namespace margelo::nitro::customcrop {
 
   public:
     // Methods
-    inline void detectRectangleForImage(const std::string& image, const std::function<void(const Rectangle& /* rectangle */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) override {
-      auto __result = _swiftPart.detectRectangleForImage(image, onSuccess, onError);
+    inline std::shared_ptr<Promise<Rectangle>> detectRectangleForImage(const std::string& image) override {
+      auto __result = _swiftPart.detectRectangleForImage(image);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+      auto __value = std::move(__result.value());
+      return __value;
     }
-    inline void cropImage(const std::string& image, const Rectangle& rectangle, const std::function<void(const std::string& /* image */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) override {
-      auto __result = _swiftPart.cropImage(image, rectangle, onSuccess, onError);
+    inline std::shared_ptr<Promise<std::string>> cropImage(const std::string& image, const Rectangle& rectangle) override {
+      auto __result = _swiftPart.cropImage(image, rectangle);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:

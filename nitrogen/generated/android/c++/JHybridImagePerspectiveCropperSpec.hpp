@@ -51,8 +51,8 @@ namespace margelo::nitro::customcrop {
 
   public:
     // Methods
-    void detectRectangleForImage(const std::string& image, const std::function<void(const Rectangle& /* rectangle */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) override;
-    void cropImage(const std::string& image, const Rectangle& rectangle, const std::function<void(const std::string& /* image */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) override;
+    std::shared_ptr<Promise<Rectangle>> detectRectangleForImage(const std::string& image) override;
+    std::shared_ptr<Promise<std::string>> cropImage(const std::string& image, const Rectangle& rectangle) override;
 
   private:
     friend HybridBase;

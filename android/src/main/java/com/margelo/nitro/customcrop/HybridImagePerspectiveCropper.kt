@@ -3,6 +3,7 @@ package com.margelo.nitro.customcrop
 import android.media.ExifInterface
 import android.util.Log
 import com.margelo.nitro.NitroModules
+import com.margelo.nitro.core.Promise
 import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
@@ -17,7 +18,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.Arrays
 import java.util.Collections
-import java.util.concurrent.Executors
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -28,27 +28,22 @@ class HybridImagePerspectiveCropper():
 
     private val applicationContext = NitroModules.applicationContext
 
-    override fun detectRectangleForImage(
-        image: String,
-        onSuccess: (rectangle: Rectangle) -> Unit,
-        onError: (message: String) -> Unit
-    ) {
-        Executors.newSingleThreadExecutor().execute {
-            val rectangle = detectRectangleInImage(image.replace("file://", ""))
-            if (rectangle != null) {
-                onSuccess(rectangle)
-            } else {
-                onError("Not found")
-            }
+    override fun detectRectangleForImage(image: String): Promise<Rectangle> {
+        return Promise.parallel {
+            detectRectangleInImage(image.replace("file://", ""))
         }
     }
 
-    override fun cropImage(
+    override fun cropImage(image: String, rectangle: Rectangle): Promise<String> {
+        return Promise.parallel {
+            _cropImage(image, rectangle)
+        }
+    }
+
+    private fun _cropImage(
         image: String,
-        rectangle: Rectangle,
-        onSuccess: (image: String) -> Unit,
-        onError: (message: String) -> Unit
-    ) {
+        rectangle: Rectangle
+    ): String {
         val tl = Point(rectangle.topLeft.x, rectangle.topLeft.y)
         val tr = Point(rectangle.topRight.x, rectangle.topRight.y)
         val bl = Point(rectangle.bottomLeft.x, rectangle.bottomLeft.y)
@@ -115,10 +110,9 @@ class HybridImagePerspectiveCropper():
         Imgproc.cvtColor(doc, doc, Imgproc.COLOR_RGB2BGR)
         Imgcodecs.imwrite(file.path, doc)
         //    saveToFile(file, byteArrayOutputStream);
-        onSuccess(file.absolutePath)
-
         src.release()
         m.release()
+        return file.absolutePath
     }
 
     override val memorySize: Long
@@ -163,14 +157,18 @@ class HybridImagePerspectiveCropper():
         return rotate
     }
 
-    fun detectRectangleInImage(filePath: String): Rectangle? {
+    private fun detectRectangleInImage(filePath: String): Rectangle {
         Log.d(TAG, "detectRectangleInImage $filePath")
         val inputRgba = Imgcodecs.imread(filePath)
         val contours = findContours(inputRgba)
         val srcSize = inputRgba.size()
         val result = getBiggestRectangle(contours, srcSize)
         inputRgba.release()
-        return result
+        if (result != null) {
+            return result
+        } else {
+            throw Exception("No rect")
+        }
     }
 
     private fun findContours(src: Mat): ArrayList<MatOfPoint> {
@@ -256,7 +254,7 @@ class HybridImagePerspectiveCropper():
         val sumComparator: Comparator<org.opencv.core.Point?> = object : Comparator<org.opencv.core.Point?> {
             override fun compare(lhs: org.opencv.core.Point?, rhs: org.opencv.core.Point?): Int {
                 if (lhs != null && rhs != null) {
-                    return java.lang.Double.compare(lhs.y + lhs.x, rhs.y + rhs.x)
+                    return (lhs.y + lhs.x).compareTo(rhs.y + rhs.x)
                 }
                 return 0
             }
@@ -265,7 +263,7 @@ class HybridImagePerspectiveCropper():
         val diffComparator: Comparator<org.opencv.core.Point?> = object : Comparator<org.opencv.core.Point?> {
             override fun compare(lhs: org.opencv.core.Point?, rhs: org.opencv.core.Point?): Int {
                 if (lhs != null && rhs != null) {
-                    return java.lang.Double.compare(lhs.y - lhs.x, rhs.y - rhs.x)
+                    return (lhs.y - lhs.x).compareTo(rhs.y - rhs.x)
                 }
                 return 0
             }

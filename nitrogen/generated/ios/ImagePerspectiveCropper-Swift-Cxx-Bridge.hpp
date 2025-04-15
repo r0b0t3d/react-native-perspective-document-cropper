@@ -23,6 +23,8 @@ namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpec_cxx;
 #include "HybridImagePerspectiveCropperSpec.hpp"
 #include "Point.hpp"
 #include "Rectangle.hpp"
+#include <NitroModules/Promise.hpp>
+#include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
@@ -35,44 +37,90 @@ namespace ImagePerspectiveCropper { class HybridImagePerspectiveCropperSpec_cxx;
  */
 namespace margelo::nitro::customcrop::bridge::swift {
 
-  // pragma MARK: std::function<void(const Rectangle& /* rectangle */)>
+  // pragma MARK: std::shared_ptr<Promise<Rectangle>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<Rectangle>>`.
+   */
+  using std__shared_ptr_Promise_Rectangle__ = std::shared_ptr<Promise<Rectangle>>;
+  inline std::shared_ptr<Promise<Rectangle>> create_std__shared_ptr_Promise_Rectangle__() {
+    return Promise<Rectangle>::create();
+  }
+  inline PromiseHolder<Rectangle> wrap_std__shared_ptr_Promise_Rectangle__(std::shared_ptr<Promise<Rectangle>> promise) {
+    return PromiseHolder<Rectangle>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const Rectangle& /* result */)>
   /**
    * Specialized version of `std::function<void(const Rectangle&)>`.
    */
-  using Func_void_Rectangle = std::function<void(const Rectangle& /* rectangle */)>;
+  using Func_void_Rectangle = std::function<void(const Rectangle& /* result */)>;
   /**
-   * Wrapper class for a `std::function<void(const Rectangle& / * rectangle * /)>`, this can be used from Swift.
+   * Wrapper class for a `std::function<void(const Rectangle& / * result * /)>`, this can be used from Swift.
    */
   class Func_void_Rectangle_Wrapper final {
   public:
-    explicit Func_void_Rectangle_Wrapper(std::function<void(const Rectangle& /* rectangle */)>&& func): _function(std::make_shared<std::function<void(const Rectangle& /* rectangle */)>>(std::move(func))) {}
-    inline void call(Rectangle rectangle) const {
-      _function->operator()(rectangle);
+    explicit Func_void_Rectangle_Wrapper(std::function<void(const Rectangle& /* result */)>&& func): _function(std::make_shared<std::function<void(const Rectangle& /* result */)>>(std::move(func))) {}
+    inline void call(Rectangle result) const {
+      _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(const Rectangle& /* rectangle */)>> _function;
+    std::shared_ptr<std::function<void(const Rectangle& /* result */)>> _function;
   };
   Func_void_Rectangle create_Func_void_Rectangle(void* _Nonnull swiftClosureWrapper);
   inline Func_void_Rectangle_Wrapper wrap_Func_void_Rectangle(Func_void_Rectangle value) {
     return Func_void_Rectangle_Wrapper(std::move(value));
   }
   
-  // pragma MARK: std::function<void(const std::string& /* message */)>
+  // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
+  /**
+   * Specialized version of `std::function<void(const std::exception_ptr&)>`.
+   */
+  using Func_void_std__exception_ptr = std::function<void(const std::exception_ptr& /* error */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::exception_ptr& / * error * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__exception_ptr_Wrapper final {
+  public:
+    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::make_shared<std::function<void(const std::exception_ptr& /* error */)>>(std::move(func))) {}
+    inline void call(std::exception_ptr error) const {
+      _function->operator()(error);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::exception_ptr& /* error */)>> _function;
+  };
+  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__exception_ptr_Wrapper wrap_Func_void_std__exception_ptr(Func_void_std__exception_ptr value) {
+    return Func_void_std__exception_ptr_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<std::string>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<std::string>>`.
+   */
+  using std__shared_ptr_Promise_std__string__ = std::shared_ptr<Promise<std::string>>;
+  inline std::shared_ptr<Promise<std::string>> create_std__shared_ptr_Promise_std__string__() {
+    return Promise<std::string>::create();
+  }
+  inline PromiseHolder<std::string> wrap_std__shared_ptr_Promise_std__string__(std::shared_ptr<Promise<std::string>> promise) {
+    return PromiseHolder<std::string>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const std::string& /* result */)>
   /**
    * Specialized version of `std::function<void(const std::string&)>`.
    */
-  using Func_void_std__string = std::function<void(const std::string& /* message */)>;
+  using Func_void_std__string = std::function<void(const std::string& /* result */)>;
   /**
-   * Wrapper class for a `std::function<void(const std::string& / * message * /)>`, this can be used from Swift.
+   * Wrapper class for a `std::function<void(const std::string& / * result * /)>`, this can be used from Swift.
    */
   class Func_void_std__string_Wrapper final {
   public:
-    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* message */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* message */)>>(std::move(func))) {}
-    inline void call(std::string message) const {
-      _function->operator()(message);
+    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* result */)>>(std::move(func))) {}
+    inline void call(std::string result) const {
+      _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(const std::string& /* message */)>> _function;
+    std::shared_ptr<std::function<void(const std::string& /* result */)>> _function;
   };
   Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
   inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
@@ -91,13 +139,22 @@ namespace margelo::nitro::customcrop::bridge::swift {
   using std__weak_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_ = std::weak_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec>;
   inline std__weak_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_ weakify_std__shared_ptr_margelo__nitro__customcrop__HybridImagePerspectiveCropperSpec_(const std::shared_ptr<margelo::nitro::customcrop::HybridImagePerspectiveCropperSpec>& strong) { return strong; }
   
-  // pragma MARK: Result<void>
-  using Result_void_ = Result<void>;
-  inline Result_void_ create_Result_void_() {
-    return Result<void>::withValue();
+  // pragma MARK: Result<std::shared_ptr<Promise<Rectangle>>>
+  using Result_std__shared_ptr_Promise_Rectangle___ = Result<std::shared_ptr<Promise<Rectangle>>>;
+  inline Result_std__shared_ptr_Promise_Rectangle___ create_Result_std__shared_ptr_Promise_Rectangle___(const std::shared_ptr<Promise<Rectangle>>& value) {
+    return Result<std::shared_ptr<Promise<Rectangle>>>::withValue(value);
   }
-  inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
-    return Result<void>::withError(error);
+  inline Result_std__shared_ptr_Promise_Rectangle___ create_Result_std__shared_ptr_Promise_Rectangle___(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<Rectangle>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<std::string>>>
+  using Result_std__shared_ptr_Promise_std__string___ = Result<std::shared_ptr<Promise<std::string>>>;
+  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::shared_ptr<Promise<std::string>>& value) {
+    return Result<std::shared_ptr<Promise<std::string>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
   }
 
 } // namespace margelo::nitro::customcrop::bridge::swift

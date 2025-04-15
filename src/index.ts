@@ -10,22 +10,16 @@ export const HybridImagePerspectiveCropper =
   )
 
 export function detectRectangle(
-  image: string,
-  onSuccess: (rectangle: Rectangle) => void,
-  onError: (error: string) => void
-) {
-  HybridImagePerspectiveCropper.detectRectangleForImage(
-    image,
-    onSuccess,
-    onError
+  image: string
+): Promise<Rectangle> {
+  return HybridImagePerspectiveCropper.detectRectangleForImage(
+    image
   )
 }
 
 export function cropImage(
   image: string,
-  rectangle: Rectangle,
-  onSuccess: (image: string) => void,
-  onError: (error: string) => void
-) {
-  HybridImagePerspectiveCropper.cropImage(image, rectangle, onSuccess, onError)
+  rectangle: Rectangle
+): Promise<string> {
+  return HybridImagePerspectiveCropper.cropImage(image, rectangle)
 }

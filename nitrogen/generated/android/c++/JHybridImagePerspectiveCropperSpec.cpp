@@ -12,14 +12,13 @@ namespace margelo::nitro::customcrop { struct Rectangle; }
 // Forward declaration of `Point` to properly resolve imports.
 namespace margelo::nitro::customcrop { struct Point; }
 
-#include <string>
-#include <functional>
+#include <NitroModules/Promise.hpp>
 #include "Rectangle.hpp"
-#include "JFunc_void_Rectangle.hpp"
+#include <NitroModules/JPromise.hpp>
 #include "JRectangle.hpp"
 #include "Point.hpp"
 #include "JPoint.hpp"
-#include "JFunc_void_std__string.hpp"
+#include <string>
 
 namespace margelo::nitro::customcrop {
 
@@ -42,13 +41,37 @@ namespace margelo::nitro::customcrop {
   
 
   // Methods
-  void JHybridImagePerspectiveCropperSpec::detectRectangleForImage(const std::string& image, const std::function<void(const Rectangle& /* rectangle */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* image */, jni::alias_ref<JFunc_void_Rectangle::javaobject> /* onSuccess */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onError */)>("detectRectangleForImage_cxx");
-    method(_javaPart, jni::make_jstring(image), JFunc_void_Rectangle_cxx::fromCpp(onSuccess), JFunc_void_std__string_cxx::fromCpp(onError));
+  std::shared_ptr<Promise<Rectangle>> JHybridImagePerspectiveCropperSpec::detectRectangleForImage(const std::string& image) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* image */)>("detectRectangleForImage");
+    auto __result = method(_javaPart, jni::make_jstring(image));
+    return [&]() {
+      auto __promise = Promise<Rectangle>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<JRectangle>(__boxedResult);
+        __promise->resolve(__result->toCpp());
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
   }
-  void JHybridImagePerspectiveCropperSpec::cropImage(const std::string& image, const Rectangle& rectangle, const std::function<void(const std::string& /* image */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* image */, jni::alias_ref<JRectangle> /* rectangle */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onSuccess */, jni::alias_ref<JFunc_void_std__string::javaobject> /* onError */)>("cropImage_cxx");
-    method(_javaPart, jni::make_jstring(image), JRectangle::fromCpp(rectangle), JFunc_void_std__string_cxx::fromCpp(onSuccess), JFunc_void_std__string_cxx::fromCpp(onError));
+  std::shared_ptr<Promise<std::string>> JHybridImagePerspectiveCropperSpec::cropImage(const std::string& image, const Rectangle& rectangle) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* image */, jni::alias_ref<JRectangle> /* rectangle */)>("cropImage");
+    auto __result = method(_javaPart, jni::make_jstring(image), JRectangle::fromCpp(rectangle));
+    return [&]() {
+      auto __promise = Promise<std::string>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<jni::JString>(__boxedResult);
+        __promise->resolve(__result->toStdString());
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
   }
 
 } // namespace margelo::nitro::customcrop

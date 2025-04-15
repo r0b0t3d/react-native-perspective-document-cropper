@@ -40,23 +40,13 @@ abstract class HybridImagePerspectiveCropperSpec: HybridObject() {
   
 
   // Methods
-  abstract fun detectRectangleForImage(image: String, onSuccess: (rectangle: Rectangle) -> Unit, onError: (message: String) -> Unit): Unit
+  @DoNotStrip
+  @Keep
+  abstract fun detectRectangleForImage(image: String): Promise<Rectangle>
   
   @DoNotStrip
   @Keep
-  private fun detectRectangleForImage_cxx(image: String, onSuccess: Func_void_Rectangle, onError: Func_void_std__string): Unit {
-    val __result = detectRectangleForImage(image, onSuccess, onError)
-    return __result
-  }
-  
-  abstract fun cropImage(image: String, rectangle: Rectangle, onSuccess: (image: String) -> Unit, onError: (message: String) -> Unit): Unit
-  
-  @DoNotStrip
-  @Keep
-  private fun cropImage_cxx(image: String, rectangle: Rectangle, onSuccess: Func_void_std__string, onError: Func_void_std__string): Unit {
-    val __result = cropImage(image, rectangle, onSuccess, onError)
-    return __result
-  }
+  abstract fun cropImage(image: String, rectangle: Rectangle): Promise<String>
 
   private external fun initHybrid(): HybridData
 

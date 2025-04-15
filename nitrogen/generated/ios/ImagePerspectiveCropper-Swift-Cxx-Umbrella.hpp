@@ -19,9 +19,9 @@ namespace margelo::nitro::customcrop { struct Rectangle; }
 #include "HybridImagePerspectiveCropperSpec.hpp"
 #include "Point.hpp"
 #include "Rectangle.hpp"
+#include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
-#include <functional>
 #include <memory>
 #include <string>
 

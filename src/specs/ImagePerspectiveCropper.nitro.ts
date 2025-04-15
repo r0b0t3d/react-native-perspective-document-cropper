@@ -16,15 +16,9 @@ export interface Rectangle {
 
 export interface ImagePerspectiveCropper
   extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
-  detectRectangleForImage(
-    image: string,
-    onSuccess: (rectangle: Rectangle) => void,
-    onError: (message: string) => void
-  ): void
+  detectRectangleForImage(image: string): Promise<Rectangle>
   cropImage(
     image: string,
-    rectangle: Rectangle,
-    onSuccess: (image: string) => void,
-    onError: (message: string) => void
-  ): void
+    rectangle: Rectangle
+  ): Promise<string>
 }

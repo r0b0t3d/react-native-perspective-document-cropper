@@ -1,68 +1,64 @@
 import Foundation
 import UIKit
 import CoreImage
+import NitroModules
+
+enum CropperError: Error {
+  case imageNotFound
+  case imageProcessedFailed
+  case noRectangleFound
+}
 
 class HybridImagePerspectiveCropper: HybridImagePerspectiveCropperSpec {
   private let rectangleDetectionQueue = DispatchQueue(label: "RectangleDetectionQueue")
   
-  func detectRectangleForImage(image: String, onSuccess: @escaping ((Rectangle) -> Void), onError: @escaping ((String) -> Void)) throws {
-    guard let ciImage = self.prepareImage(image: image) else {
-      onError("Image could not be loaded")
-      return
-    }
-    
-    self.detectRectangle(from: ciImage) { coordinates in
-        if let coordinates = coordinates {
-            onSuccess(coordinates)
-        } else {
-            onError("Not found")
-        }
+  func detectRectangleForImage(image: String) -> NitroModules.Promise<Rectangle> {
+    return Promise.parallel(rectangleDetectionQueue) {
+      guard let ciImage = self.prepareImage(image: image) else {
+        throw CropperError.imageNotFound
+      }
+      
+      return try self.detectRectangle(from: ciImage)
     }
   }
   
-  func cropImage(image: String, rectangle: Rectangle, onSuccess: @escaping ((String) -> Void), onError: @escaping ((String) -> Void)) throws {
-    guard var ciImage = self.prepareImage(image: image) else {
-      return
-    }
-    // CoreImage is working with cartesian coordinates, basically y:0 is in the bottom left corner
-    let newTopLeft = self.cartesianForPoint(rectangle.topLeft, height: rectangle.height)
-    let newTopRight = self.cartesianForPoint(rectangle.topRight, height: rectangle.height)
-    let newBottomLeft = self.cartesianForPoint(rectangle.bottomLeft, height: rectangle.height)
-    let newBottomRight = self.cartesianForPoint(rectangle.bottomRight, height: rectangle.height)
-    let rectangleCoordinates: [String: Any] = [
-      "inputTopLeft": CIVector(cgPoint: newTopLeft),
-      "inputTopRight": CIVector(cgPoint: newTopRight),
-      "inputBottomLeft": CIVector(cgPoint: newBottomLeft),
-      "inputBottomRight": CIVector(cgPoint: newBottomRight)
-    ]
-      
-    ciImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: rectangleCoordinates)
-    rectangleDetectionQueue.async {
-      autoreleasepool {
-        let context = CIContext()
-        guard let correctedCGImage = context.createCGImage(ciImage, from: ciImage.extent) else {
-          onError("Failed to process image")
-          return
-        }
-        let correctedUIImage = UIImage(cgImage: correctedCGImage)
-        
-        // Encode image as JPEG
-        guard let imageData = correctedUIImage.jpegData(compressionQuality: 0.8) else {
-          onError("Failed to encode image")
-          return
-        }
-        let uuid = UUID().uuidString
-        let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-        guard let documentsDirectory = paths.first else { return }
-        let dataPath = documentsDirectory.appendingPathComponent("\(uuid).jpg")
-        
-        do {
-          try imageData.write(to: dataPath)
-          onSuccess(dataPath.path)
-        } catch {
-          onError("Failed to write image")
-        }
+  func cropImage(image: String, rectangle: Rectangle) throws -> NitroModules.Promise<String> {
+    return Promise.parallel(rectangleDetectionQueue) {
+      guard var ciImage = self.prepareImage(image: image) else {
+        throw CropperError.imageNotFound
       }
+      // CoreImage is working with cartesian coordinates, basically y:0 is in the bottom left corner
+      let newTopLeft = self.cartesianForPoint(rectangle.topLeft, height: rectangle.height)
+      let newTopRight = self.cartesianForPoint(rectangle.topRight, height: rectangle.height)
+      let newBottomLeft = self.cartesianForPoint(rectangle.bottomLeft, height: rectangle.height)
+      let newBottomRight = self.cartesianForPoint(rectangle.bottomRight, height: rectangle.height)
+      let rectangleCoordinates: [String: Any] = [
+        "inputTopLeft": CIVector(cgPoint: newTopLeft),
+        "inputTopRight": CIVector(cgPoint: newTopRight),
+        "inputBottomLeft": CIVector(cgPoint: newBottomLeft),
+        "inputBottomRight": CIVector(cgPoint: newBottomRight)
+      ]
+        
+      ciImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: rectangleCoordinates)
+      let context = CIContext()
+      guard let correctedCGImage = context.createCGImage(ciImage, from: ciImage.extent) else {
+        throw CropperError.imageProcessedFailed
+      }
+      let correctedUIImage = UIImage(cgImage: correctedCGImage)
+      
+      // Encode image as JPEG
+      guard let imageData = correctedUIImage.jpegData(compressionQuality: 0.8) else {
+        throw CropperError.imageProcessedFailed
+      }
+      let uuid = UUID().uuidString
+      let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+      guard let documentsDirectory = paths.first else {
+        throw CropperError.imageProcessedFailed
+      }
+      let dataPath = documentsDirectory.appendingPathComponent("\(uuid).jpg")
+      
+      try imageData.write(to: dataPath)
+      return dataPath.path
     }
   }
   
@@ -76,24 +72,20 @@ class HybridImagePerspectiveCropper: HybridImagePerspectiveCropperSpec {
     return CIImage(cgImage: self.fixOrientation(uiImage).cgImage!)
   }
 
-  private func detectRectangle(from ciImage: CIImage, completion: @escaping (Rectangle?) -> Void) {
-    rectangleDetectionQueue.async {
-      autoreleasepool {
-        let context = CIContext(options: nil)
-        let cgDetectionImage = context.createCGImage(ciImage, from: ciImage.extent)
-        let detectionImage = CIImage(cgImage: cgDetectionImage!)
-        
-        let detector = CIDetector(ofType: CIDetectorTypeRectangle, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
-        let features = detector?.features(in: detectionImage) as? [CIRectangleFeature]
-        let rectangleFeature = self.biggestRectangle(in: features)
-        
-        if let rectangleFeature = rectangleFeature {
-            let rectangleCoordinates = self.computeRectangle(rectangleFeature, for: detectionImage)
-            completion(rectangleCoordinates)
-        } else {
-            completion(nil)
-        }
-      }
+  private func detectRectangle(from ciImage: CIImage) throws -> Rectangle {
+    let context = CIContext(options: nil)
+    let cgDetectionImage = context.createCGImage(ciImage, from: ciImage.extent)
+    let detectionImage = CIImage(cgImage: cgDetectionImage!)
+    
+    let detector = CIDetector(ofType: CIDetectorTypeRectangle, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
+    let features = detector?.features(in: detectionImage) as? [CIRectangleFeature]
+    let rectangleFeature = self.biggestRectangle(in: features)
+    
+    if let rectangleFeature = rectangleFeature {
+        let rectangleCoordinates = self.computeRectangle(rectangleFeature, for: detectionImage)
+        return rectangleCoordinates
+    } else {
+      throw CropperError.noRectangleFound
     }
   }
 

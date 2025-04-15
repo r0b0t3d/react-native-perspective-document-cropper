@@ -13,19 +13,27 @@
 
 namespace margelo::nitro::customcrop::bridge::swift {
 
-  // pragma MARK: std::function<void(const Rectangle& /* rectangle */)>
+  // pragma MARK: std::function<void(const Rectangle& /* result */)>
   Func_void_Rectangle create_Func_void_Rectangle(void* _Nonnull swiftClosureWrapper) {
     auto swiftClosure = ImagePerspectiveCropper::Func_void_Rectangle::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)](const Rectangle& rectangle) mutable -> void {
-      swiftClosure.call(rectangle);
+    return [swiftClosure = std::move(swiftClosure)](const Rectangle& result) mutable -> void {
+      swiftClosure.call(result);
     };
   }
   
-  // pragma MARK: std::function<void(const std::string& /* message */)>
+  // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
+  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = ImagePerspectiveCropper::Func_void_std__exception_ptr::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::exception_ptr& error) mutable -> void {
+      swiftClosure.call(error);
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::string& /* result */)>
   Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) {
     auto swiftClosure = ImagePerspectiveCropper::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)](const std::string& message) mutable -> void {
-      swiftClosure.call(message);
+    return [swiftClosure = std::move(swiftClosure)](const std::string& result) mutable -> void {
+      swiftClosure.call(result);
     };
   }
   

@@ -14,8 +14,8 @@ public protocol HybridImagePerspectiveCropperSpec_protocol: HybridObject {
   
 
   // Methods
-  func detectRectangleForImage(image: String, onSuccess: @escaping (_ rectangle: Rectangle) -> Void, onError: @escaping (_ message: String) -> Void) throws -> Void
-  func cropImage(image: String, rectangle: Rectangle, onSuccess: @escaping (_ image: String) -> Void, onError: @escaping (_ message: String) -> Void) throws -> Void
+  func detectRectangleForImage(image: String) throws -> Promise<Rectangle>
+  func cropImage(image: String, rectangle: Rectangle) throws -> Promise<String>
 }
 
 /// See ``HybridImagePerspectiveCropperSpec``

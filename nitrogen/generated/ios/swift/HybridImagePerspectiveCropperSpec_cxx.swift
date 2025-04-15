@@ -101,44 +101,40 @@ public class HybridImagePerspectiveCropperSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func detectRectangleForImage(image: std.string, onSuccess: bridge.Func_void_Rectangle, onError: bridge.Func_void_std__string) -> bridge.Result_void_ {
+  public final func detectRectangleForImage(image: std.string) -> bridge.Result_std__shared_ptr_Promise_Rectangle___ {
     do {
-      try self.__implementation.detectRectangleForImage(image: String(image), onSuccess: { () -> (Rectangle) -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void_Rectangle(onSuccess)
-        return { (__rectangle: Rectangle) -> Void in
-          __wrappedFunction.call(__rectangle)
-        }
-      }(), onError: { () -> (String) -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void_std__string(onError)
-        return { (__message: String) -> Void in
-          __wrappedFunction.call(std.string(__message))
-        }
-      }())
-      return bridge.create_Result_void_()
+      let __result = try self.__implementation.detectRectangleForImage(image: String(image))
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_Rectangle__ in
+        let __promise = bridge.create_std__shared_ptr_Promise_Rectangle__()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_Rectangle__(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve(__result) })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_Rectangle___(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_void_(__exceptionPtr)
+      return bridge.create_Result_std__shared_ptr_Promise_Rectangle___(__exceptionPtr)
     }
   }
   
   @inline(__always)
-  public final func cropImage(image: std.string, rectangle: Rectangle, onSuccess: bridge.Func_void_std__string, onError: bridge.Func_void_std__string) -> bridge.Result_void_ {
+  public final func cropImage(image: std.string, rectangle: Rectangle) -> bridge.Result_std__shared_ptr_Promise_std__string___ {
     do {
-      try self.__implementation.cropImage(image: String(image), rectangle: rectangle, onSuccess: { () -> (String) -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void_std__string(onSuccess)
-        return { (__image: String) -> Void in
-          __wrappedFunction.call(std.string(__image))
-        }
-      }(), onError: { () -> (String) -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void_std__string(onError)
-        return { (__message: String) -> Void in
-          __wrappedFunction.call(std.string(__message))
-        }
-      }())
-      return bridge.create_Result_void_()
+      let __result = try self.__implementation.cropImage(image: String(image), rectangle: rectangle)
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_std__string__ in
+        let __promise = bridge.create_std__shared_ptr_Promise_std__string__()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__string__(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve(std.string(__result)) })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_std__string___(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_void_(__exceptionPtr)
+      return bridge.create_Result_std__shared_ptr_Promise_std__string___(__exceptionPtr)
     }
   }
 }

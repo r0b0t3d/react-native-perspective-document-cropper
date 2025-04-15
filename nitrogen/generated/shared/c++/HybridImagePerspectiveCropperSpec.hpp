@@ -16,9 +16,9 @@
 // Forward declaration of `Rectangle` to properly resolve imports.
 namespace margelo::nitro::customcrop { struct Rectangle; }
 
-#include <string>
-#include <functional>
+#include <NitroModules/Promise.hpp>
 #include "Rectangle.hpp"
+#include <string>
 
 namespace margelo::nitro::customcrop {
 
@@ -51,8 +51,8 @@ namespace margelo::nitro::customcrop {
 
     public:
       // Methods
-      virtual void detectRectangleForImage(const std::string& image, const std::function<void(const Rectangle& /* rectangle */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) = 0;
-      virtual void cropImage(const std::string& image, const Rectangle& rectangle, const std::function<void(const std::string& /* image */)>& onSuccess, const std::function<void(const std::string& /* message */)>& onError) = 0;
+      virtual std::shared_ptr<Promise<Rectangle>> detectRectangleForImage(const std::string& image) = 0;
+      virtual std::shared_ptr<Promise<std::string>> cropImage(const std::string& image, const Rectangle& rectangle) = 0;
 
     protected:
       // Hybrid Setup
