@@ -1,6 +1,6 @@
 {
   "name": "react-native-perspective-document-cropper",
-  "version": "0.0.8",
+  "version": "0.1.0-alpha.0",
   "description": "A template for Nitro Modules.",
   "main": "lib/index",
   "module": "lib/index",
