@@ -2,5 +2,7 @@
 #include "ImagePerspectiveCropperOnLoad.hpp"
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
-  return margelo::nitro::customcrop::initialize(vm);
+  return facebook::jni::initialize(vm, []() {
+    margelo::nitro::customcrop::registerAllNatives();
+  });
 }
