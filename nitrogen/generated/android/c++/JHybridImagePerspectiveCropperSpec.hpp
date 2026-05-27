@@ -21,11 +21,11 @@ namespace margelo::nitro::customcrop {
   class JHybridImagePerspectiveCropperSpec: public virtual HybridImagePerspectiveCropperSpec, public virtual JHybridObject {
   public:
     struct JavaPart: public jni::JavaClass<JavaPart, JHybridObject::JavaPart> {
-      static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/customcrop/HybridImagePerspectiveCropperSpec;";
+      static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/customcrop/HybridImagePerspectiveCropperSpec;";
       std::shared_ptr<JHybridImagePerspectiveCropperSpec> getJHybridImagePerspectiveCropperSpec();
     };
     struct CxxPart: public jni::HybridClass<CxxPart, JHybridObject::CxxPart> {
-      static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/customcrop/HybridImagePerspectiveCropperSpec$CxxPart;";
+      static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/customcrop/HybridImagePerspectiveCropperSpec$CxxPart;";
       static jni::local_ref<jhybriddata> initHybrid(jni::alias_ref<jhybridobject> jThis);
       static void registerNatives();
       using HybridBase::HybridBase;

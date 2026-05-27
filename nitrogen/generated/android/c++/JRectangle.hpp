@@ -22,7 +22,7 @@ namespace margelo::nitro::customcrop {
    */
   struct JRectangle final: public jni::JavaClass<JRectangle> {
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/customcrop/Rectangle;";
+    static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/customcrop/Rectangle;";
 
   public:
     /**

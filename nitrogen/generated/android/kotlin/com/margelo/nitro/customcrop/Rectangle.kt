@@ -9,6 +9,7 @@ package com.margelo.nitro.customcrop
 
 import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
+import java.util.Objects
 
 
 /**
@@ -37,6 +38,28 @@ data class Rectangle(
   val height: Double
 ) {
   /* primary constructor */
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (other !is Rectangle) return false
+    return Objects.deepEquals(this.topLeft, other.topLeft)
+      && Objects.deepEquals(this.topRight, other.topRight)
+      && Objects.deepEquals(this.bottomLeft, other.bottomLeft)
+      && Objects.deepEquals(this.bottomRight, other.bottomRight)
+      && Objects.deepEquals(this.width, other.width)
+      && Objects.deepEquals(this.height, other.height)
+  }
+
+  override fun hashCode(): Int {
+    return arrayOf<Any?>(
+      topLeft,
+      topRight,
+      bottomLeft,
+      bottomRight,
+      width,
+      height
+    ).contentDeepHashCode()
+  }
 
   companion object {
     /**

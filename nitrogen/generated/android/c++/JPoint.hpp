@@ -21,7 +21,7 @@ namespace margelo::nitro::customcrop {
    */
   struct JPoint final: public jni::JavaClass<JPoint> {
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/customcrop/Point;";
+    static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/customcrop/Point;";
 
   public:
     /**

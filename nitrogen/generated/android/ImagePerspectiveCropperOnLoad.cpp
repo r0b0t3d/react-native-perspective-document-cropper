@@ -27,9 +27,9 @@ int initialize(JavaVM* vm) {
 }
 
 struct JHybridImagePerspectiveCropperSpecImpl: public jni::JavaClass<JHybridImagePerspectiveCropperSpecImpl, JHybridImagePerspectiveCropperSpec::JavaPart> {
-  static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/customcrop/HybridImagePerspectiveCropper;";
+  static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/customcrop/HybridImagePerspectiveCropper;";
   static std::shared_ptr<JHybridImagePerspectiveCropperSpec> create() {
-    static auto constructorFn = javaClassStatic()->getConstructor<JHybridImagePerspectiveCropperSpecImpl::javaobject()>();
+    static const auto constructorFn = javaClassStatic()->getConstructor<JHybridImagePerspectiveCropperSpecImpl::javaobject()>();
     jni::local_ref<JHybridImagePerspectiveCropperSpec::JavaPart> javaPart = javaClassStatic()->newObject(constructorFn);
     return javaPart->getJHybridImagePerspectiveCropperSpec();
   }
