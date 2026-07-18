@@ -18,7 +18,7 @@ namespace margelo::nitro::customcrop {
   using namespace facebook;
 
   /**
-   * The C++ JNI bridge between the C++ struct "Rectangle" and the the Kotlin data class "Rectangle".
+   * The C++ JNI bridge between the C++ struct "Rectangle" and the Kotlin data class "Rectangle".
    */
   struct JRectangle final: public jni::JavaClass<JRectangle> {
   public:
