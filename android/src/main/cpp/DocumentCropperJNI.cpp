@@ -146,9 +146,6 @@ Java_com_margelo_nitro_customcrop_HybridImagePerspectiveCropper_nativeDetectRect
     jdoubleArray out = env->NewDoubleArray(10);
     env->SetDoubleArrayRegion(out, 0, 10, values);
     return out;
-  } catch (const cv::Exception& e) {
-    throwRuntimeException(env, e.what());
-    return nullptr;
   } catch (const std::exception& e) {
     throwRuntimeException(env, e.what());
     return nullptr;
@@ -181,9 +178,6 @@ Java_com_margelo_nitro_customcrop_HybridImagePerspectiveCropper_nativeCropImage(
     BitmapPixelLock dstLock(env, outputBitmap);
     copyMatIntoBitmap(cropped, dstLock);
     return outputBitmap;
-  } catch (const cv::Exception& e) {
-    throwRuntimeException(env, e.what());
-    return nullptr;
   } catch (const std::exception& e) {
     throwRuntimeException(env, e.what());
     return nullptr;

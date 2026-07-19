@@ -17,6 +17,7 @@ add_library(${PACKAGE_NAME} SHARED
         src/main/cpp/DocumentDetector.cpp
         src/main/cpp/DocumentCropper.cpp
         src/main/cpp/DocumentCropperJNI.cpp
+        src/main/cpp/openmp_deinit_stub.cpp
 )
 
 # Add Nitrogen specs :)
